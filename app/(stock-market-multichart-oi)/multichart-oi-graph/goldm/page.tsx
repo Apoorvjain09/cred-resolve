@@ -11,7 +11,7 @@ export default async function GoldmMultichartOiGraphPage() {
     host.includes("localhost") || host.startsWith("127.0.0.1");
   const snapshots = isLocalhost
     ? testingSnapshots
-    : await getGoldmOptionChainSnapshots({});
+    : await getGoldmOptionChainSnapshots({ limit: 1000 });
 
   return (
     <div className="min-h-screen bg-slate-50">

@@ -14,12 +14,15 @@ export async function storeGoldmOptionChainSnapshot(params: {
 
 export async function getGoldmOptionChainSnapshots(params: {
   sinceIso?: string;
+  limit?: number;
 }) {
-  const { sinceIso } = params;
+  const { sinceIso, limit = 1000 } = params;
+  const safeLimit = Math.max(1, Math.min(limit, 5000));
   const query = supabase
     .from("goldm_option_chain_snapshots")
     .select("datahc,atm,future_price,spot_price,snapshot_at")
-    .order("snapshot_at", { ascending: true });
+    .order("snapshot_at", { ascending: false })
+    .limit(safeLimit);
 
   const { data, error } = sinceIso
     ? await query.gte("snapshot_at", sinceIso)
@@ -29,5 +32,5 @@ export async function getGoldmOptionChainSnapshots(params: {
     throw new Error(error.message);
   }
 
-  return data ?? [];
+  return (data ?? []).reverse();
 }

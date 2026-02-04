@@ -14,6 +14,11 @@
 │  5h limit:         [████████████████████] 98% left (resets 21:33)          │
 │  Weekly limit:     [██████████████░░░░░░] 72% left (resets 16:43 on 2 Feb) 
 
+# sites
+https://www.research360.in/commodity/com-detail/goldm
+https://console.cron-job.org/dashboard
+UI - https://extra-hobby-projects.vercel.app/multichart-oi-graph/goldm
+
 # stock-market-multichart-oi
 
 This folder contains the GOLDM multistrike OI mini‑app: data ingestion, storage, and the chart UI.
