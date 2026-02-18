@@ -68,10 +68,10 @@ export function CreatePollForm() {
       if (
         data &&
         typeof data === 'object' &&
-        'id' in data &&
+        'roomId' in data &&
         'shareUrl' in data &&
         'expiresAt' in data &&
-        typeof data.id === 'string' &&
+        typeof data.roomId === 'string' &&
         typeof data.shareUrl === 'string' &&
         typeof data.expiresAt === 'string'
       ) {
