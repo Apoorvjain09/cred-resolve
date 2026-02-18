@@ -58,10 +58,27 @@ export function CreatePollForm() {
       const data = (await res.json().catch(() => null)) as CreatePollResponse | { message?: string } | null;
 
       if (!res.ok) {
-        throw new Error(typeof data?.message === 'string' ? data.message : 'Unable to create poll.');
+        const message =
+          data && typeof data === 'object' && 'message' in data && typeof data.message === 'string'
+            ? data.message
+            : 'Unable to create poll.';
+        throw new Error(message);
       }
 
-      setCreated(data as CreatePollResponse);
+      if (
+        data &&
+        typeof data === 'object' &&
+        'id' in data &&
+        'shareUrl' in data &&
+        'expiresAt' in data &&
+        typeof data.id === 'string' &&
+        typeof data.shareUrl === 'string' &&
+        typeof data.expiresAt === 'string'
+      ) {
+        setCreated(data);
+      } else {
+        throw new Error('Unable to create poll.');
+      }
     } catch (submitError) {
       setError(submitError instanceof Error ? submitError.message : 'Unable to create poll.');
     } finally {
