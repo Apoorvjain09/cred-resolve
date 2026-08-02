@@ -15,6 +15,7 @@ export default function ExamHelperPage() {
   const [updatedAt, setUpdatedAt] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [codeExpanded, setCodeExpanded] = useState(true);
 
   const loadMessage = useCallback(async () => {
     const res = await fetch("/api/realtime-webhook", {
@@ -114,12 +115,21 @@ export default function ExamHelperPage() {
             </p>
           ) : codeBlock ? (
             <div className="w-full max-w-5xl overflow-hidden rounded-lg border border-white/10 bg-black/45 text-left shadow-2xl">
-              <div className="border-b border-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/45">
-                {codeBlock.language}
+              <div className="flex items-center justify-between gap-3 border-b border-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/45">
+                <span>{codeBlock.language}</span>
+                <button
+                  type="button"
+                  onClick={() => setCodeExpanded((expanded) => !expanded)}
+                  className="rounded border border-white/10 px-2 py-1 text-[10px] text-white/70 hover:bg-white/10"
+                >
+                  {codeExpanded ? "Minimize" : "Maximize"}
+                </button>
               </div>
-              <pre className="max-h-[70vh] overflow-auto p-4 text-sm leading-relaxed text-white sm:text-base">
-                <code>{codeBlock.code}</code>
-              </pre>
+              {codeExpanded ? (
+                <pre className="max-h-[70vh] overflow-auto p-4 text-sm leading-relaxed text-white sm:text-base">
+                  <code>{codeBlock.code}</code>
+                </pre>
+              ) : null}
             </div>
           ) : message ? (
             <p className="max-w-5xl whitespace-pre-wrap break-words text-center text-5xl font-bold leading-tight sm:text-7xl lg:text-8xl">
