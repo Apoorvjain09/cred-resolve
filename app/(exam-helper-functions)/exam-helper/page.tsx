@@ -8,6 +8,7 @@ type LatestMessageResponse = {
 };
 
 const POLL_INTERVAL_MS = 30_000;
+const CODE_BLOCK_RE = /^```(\w+)?\n([\s\S]*?)\n```$/;
 
 export default function ExamHelperPage() {
   const [message, setMessage] = useState("");
@@ -85,6 +86,11 @@ export default function ExamHelperPage() {
     }).format(new Date(updatedAt));
   }, [updatedAt]);
 
+  const codeBlock = useMemo(() => {
+    const match = message.match(CODE_BLOCK_RE);
+    return match ? { language: match[1] ?? "code", code: match[2] } : null;
+  }, [message]);
+
   return (
     <main className="min-h-screen bg-neutral-950 px-5 py-8 text-white sm:px-8">
       <section className="mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-5xl flex-col justify-center">
@@ -106,6 +112,15 @@ export default function ExamHelperPage() {
             <p className="text-3xl font-semibold text-white/60 sm:text-5xl">
               Loading...
             </p>
+          ) : codeBlock ? (
+            <div className="w-full max-w-5xl overflow-hidden rounded-lg border border-white/10 bg-black/45 text-left shadow-2xl">
+              <div className="border-b border-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/45">
+                {codeBlock.language}
+              </div>
+              <pre className="max-h-[70vh] overflow-auto p-4 text-sm leading-relaxed text-white sm:text-base">
+                <code>{codeBlock.code}</code>
+              </pre>
+            </div>
           ) : message ? (
             <p className="max-w-5xl whitespace-pre-wrap break-words text-center text-5xl font-bold leading-tight sm:text-7xl lg:text-8xl">
               {message}
