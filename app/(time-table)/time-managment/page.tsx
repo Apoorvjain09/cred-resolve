@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { getOrCreateTodayTimeTable } from "./_lib/time-tables-functions"
 import { getTimeTables } from "../_lib/supabase-actions"
 
