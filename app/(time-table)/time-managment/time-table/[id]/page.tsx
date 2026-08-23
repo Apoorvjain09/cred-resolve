@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation"
 import { getTimeTable } from "@/app/(time-table)/_lib/supabase-actions"
 import { addHour, formatTimeTableDate } from "@/app/(time-table)/_lib/helper-funtions"
-import { addTask } from "@/app/(time-table)/time-managment/_lib/time-tables-functions"
+import { addTask, updateTaskTag } from "@/app/(time-table)/time-managment/_lib/time-tables-functions"
+import { getTimeTag, TIME_TAGS } from "@/app/(time-table)/time-managment/_lib/time-tags"
+import { TaskTagForm } from "../_components/TagTaskForm"
 
 export default async function TimeTablePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params
@@ -16,12 +18,13 @@ export default async function TimeTablePage({ params }: { params: Promise<{ id: 
             </div>
 
             <div className="divide-y rounded-lg border">
-                {timeTable.tasks.map((item) => (
-                    <div key={`${item.startTime}-${item.endTime}`} className="flex items-center gap-6 px-4 py-3">
+                {timeTable.tasks.map((item, index) => (
+                    <div key={`${item.startTime}-${item.endTime}-${index}`} className="flex items-center gap-6 px-4 py-3">
                         <span className="w-32 shrink-0 text-sm text-muted-foreground">
                             {item.startTime} – {item.endTime}
                         </span>
-                        <span className="text-sm font-medium">{item.task}</span>
+                        <span className="min-w-0 flex-1 text-sm font-medium">{item.task}</span>
+                        <TaskTagForm id={id} taskIndex={index} tagId={item.tagId} />
                     </div>
                 ))}
             </div>
