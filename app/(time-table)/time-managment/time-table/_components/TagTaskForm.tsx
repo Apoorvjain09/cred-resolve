@@ -15,7 +15,7 @@ export function TaskTagForm({ id, taskIndex, tagId }: { id: string; taskIndex: n
                 setSelected(e.target.value)
                 updateTaskTag(id, taskIndex, e.target.value)
             }}
-            className={`w-36 rounded border px-2 py-1 text-xs outline-none ${tag?.className ?? "bg-transparent text-muted-foreground"}`}
+            className={`w-full rounded border px-2 py-1 text-xs outline-none sm:w-36 ${tag?.className ?? "bg-transparent text-muted-foreground"}`}
         >
             <option value="" disabled>Tag</option>
 

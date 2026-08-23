@@ -7,8 +7,8 @@ export default async function TimeManagementPage() {
     const timeTables = await getTimeTables()
 
     return (
-        <main className="mx-auto max-w-2xl p-6">
-            <div className="mb-8">
+        <main className="mx-auto max-w-2xl px-4 py-5 sm:p-6">
+            <div className="mb-6 sm:mb-8">
                 <h1 className="text-2xl font-semibold">Time Management</h1>
                 <p className="text-sm text-muted-foreground">
                     Your daily time tables
@@ -33,7 +33,7 @@ export default async function TimeManagementPage() {
                         <Link
                             key={item.id}
                             href={`/time-managment/time-table/${item.id}`}
-                            className="flex items-center justify-between px-4 py-3 transition-colors hover:bg-muted/50"
+                            className="flex flex-col gap-1 px-4 py-3 transition-colors hover:bg-muted/50 sm:flex-row sm:items-center sm:justify-between"
                         >
                             <span className="text-sm font-medium">
                                 {day}
